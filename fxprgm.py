@@ -41,13 +41,13 @@ def rem_currency( rem_currency_payload):
         return _rem_currency_result;
 
 # Checks Badge Number
-def bdg_number(badgeNumber):
+def bdg_number(_badge_number):
         bdg_number_results = requests.get(url=bdg_number_url,data=json.dumps(badgeNumber), headers=headers)
         _bdg_number_result = json.loads(bdg_number_results.text)
         return _bdg_number_result;
 
 # Checks Case Number
-def cs_number(bdg_number_payload):
+def cs_number(_case_number):
         bdg_number_results = requests.get(url=cs_number_url,data=json.dumps(_case), headers=headers)
         _bdg_number_result = json.loads(bdg_number_results.text)
         return _bdg_number_result;
@@ -68,12 +68,24 @@ while True:
         if selection == 2:
                 _case = input("Enter Case Number: ")
                 _case_number = {"Case":_case,"token":_token}
-                print (cs_number(_case_number))
-                badgeNumber = input("Enter Badge Number: ")
-                _badge_number = {"Badge Number":badgeNumber,"token":_token}
-                print (bdg_number(_badge_number))
-                _scan_currency_payload = { "ORI":ORI, "Token":_token, "Case":_case,"BadgeNumber":badgeNumber, "currencies":[{"SerialNumber":"LH023456765F","Denomination":"100","Date":st,"Photo":"strg"}]}
-                print (scan_currency( _scan_currency_payload ))
+                if (cs_number(_case_number)) != False:
+                        answ=input("Case #"+_case+" is not in system, do you want to create this case number?")
+                        if answ == "Yes":
+                                badgeNumber = input("Enter Badge Number: ")
+                                _badge_number = {"Badge Number":badgeNumber,"token":_token}
+                        else:
+                                _case = input("Enter Case Number: ")
+                                _case_number = {"Case":_case,"token":_token}
+                else:
+                        badgeNumber = input("Enter Badge Number: ")
+                        _badge_number = {"Badge Number":badgeNumber,"token":_token}
+                        _scan_currency_payload = { "ORI":ORI, "Token":_token, "Case":_case,"BadgeNumber":badgeNumber, "currencies":[{"SerialNumber":"LH023456765F","Denomination":"100","Date":st,"Photo":"strg"}]}
+                        print (scan_currency( _scan_currency_payload ))
+#                badgeNumber = input("Enter Badge Number: ")
+#                _badge_number = {"Badge Number":badgeNumber,"token":_token}
+#                print (bdg_number(_badge_number))
+#                _scan_currency_payload = { "ORI":ORI, "Token":_token, "Case":_case,"BadgeNumber":badgeNumber, "currencies":[{"SerialNumber":"LH023456765F","Denomination":"100","Date":st,"Photo":"strg"}]}
+#                print (scan_currency( _scan_currency_payload ))
 
         if selection == 3:
                 SerialNumber=input("Please enter the serial number: ")
