@@ -73,9 +73,11 @@ while True:
                         if answ == "Yes":
                                 badgeNumber = input("Enter Badge Number: ")
                                 _badge_number = {"Badge Number":badgeNumber,"token":_token}
-                        else:
+                        elif answ == "No":
                                 _case = input("Enter Case Number: ")
                                 _case_number = {"Case":_case,"token":_token}
+                        elif answ == 0:
+                                break #cancels
                 else:
                         badgeNumber = input("Enter Badge Number: ")
                         _badge_number = {"Badge Number":badgeNumber,"token":_token}
