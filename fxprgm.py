@@ -8,7 +8,7 @@ st = datetime.datetime.fromtimestamp(ts).strftime('%m/%d/%Y %H:%M:%S')
 ORI = "76543"
 get_token_url = "http://pi.shahrdar.com/api/APIAuthentication/Get"
 query_currency_url = "http://pi.shahrdar.com/api/MobileService/Query"
-scan_currency_url = "http://pi.shahrdar.com/api/MobileService/Seize"
+scan_currency_url = "http://pi.shahrdar.com/api/MobileService/Scan"
 rem_currency_url = "http://pi.shahrdar.com/api/MobileService/Delete"
 bdg_number_url = "http://pi.shahrdar.com/api/APIAuthentication/BadgeCheck"
 cs_number_url = "http://pi.shahrdar.com/api/APIAuthentication/CaseCheck"
@@ -73,6 +73,8 @@ while True:
                         if answ == "Yes":
                                 badgeNumber = input("Enter Badge Number: ")
                                 _badge_number = {"Badge Number":badgeNumber,"token":_token}
+                                _scan_currency_payload = { "ORI":ORI, "Token":_token, "Case":_case,"BadgeNumber":badgeNumber, "currencies":[{"SerialNumber":"LH023456765F","Denomination":"100","Date":st,"Photo":"strg"}]}
+                                print (scan_currency( _scan_currency_payload ))
                         elif answ == "No":
                                 _case = input("Enter Case Number: ")
                                 _case_number = {"Case":_case,"token":_token}
